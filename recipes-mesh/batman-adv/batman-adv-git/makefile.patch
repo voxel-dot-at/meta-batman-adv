@@ -1,0 +1,25 @@
+Index: git-r1/git/Makefile
+===================================================================
+--- git-r1.orig/git/Makefile
++++ git-r1/git/Makefile
+@@ -33,6 +33,10 @@ export CONFIG_BATMAN_ADV_MCAST=y
+ export CONFIG_BATMAN_ADV_BATMAN_V=y
+ 
+ PWD:=$(shell pwd)
++# Yocto/OpenEmbedded kernel module recipe defines KERNEL_PATH
++ifneq ($(KERNEL_PATH),)
++KERNELPATH = $(KERNEL_PATH)
++endif
+ KERNELPATH ?= /lib/modules/$(shell uname -r)/build
+ # sanity check: does KERNELPATH exist?
+ ifeq ($(shell cd $(KERNELPATH) && pwd),)
+@@ -89,6 +93,9 @@ install: config
+ 	$(MAKE) -C $(KERNELPATH) $(BUILD_FLAGS) modules_install
+ 	depmod -a
+ 
++# OpenEmbedded also wants
++modules_install: install
++
+ config:
+ 	$(PWD)/gen-compat-autoconf.sh $(PWD)/compat-autoconf.h
+ 
