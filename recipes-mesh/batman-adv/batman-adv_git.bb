@@ -8,7 +8,8 @@ PR = "r1"
 inherit module
 
 SRC_URI = " git://git.open-mesh.org/batman-adv.git;protocol=https \
-	    file://makefile.patch;striplevel=2 "
+	    file://makefile.patch;striplevel=2 \
+	    file://debug.patch "
 
 SRCREV = "${AUTOREV}"
 
